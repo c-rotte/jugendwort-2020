@@ -1,13 +1,13 @@
 import random
+import string
 from concurrent.futures import ThreadPoolExecutor
 
 import requests
-from bs4 import BeautifulSoup
 
 WORD = "Schabernack"
 INDEX = 0  # Index of the word
-ATTEMPTS = 100000
-WORKERS = 700
+ATTEMPTS = 10000
+WORKERS = 100
 SOCKS4_LIST_URL = "https://api.proxyscrape.com/?request=getproxies&proxytype=socks4"
 
 
@@ -32,24 +32,20 @@ class Voter:
             'Origin': 'null',
             'Connection': 'keep-alive',
             'Cookie': 'js20=eyJ0b3AxMEFnZUlkeCI6MiwidG9wMTBXb3JkSWR4IjowLCJ0b3AxMENvbnNlbnQiOjEsInZvdGVkVG9wMTAiOjAsInZvdGVkVG9wMTBXb3JkIjoiU2NoYWJlcm5hY2sifQ==; js20.sig=W0UAPnkamc9lOvQRdLP4hJNhdRs',
-            # the cookie (signed) is of the format base64("{"top10AgeIdx":<age>,"top10WordIdx":<index>,"top10Consent":1,"votedTop10":<index>,"votedTop10Word":<word>}"); we don't change it since it seems to be only used for validation, not information 
+            # the cookie (signed) is of the format base64("{"top10AgeIdx":<age>,"top10WordIdx":<index>,"top10Consent":1,"votedTop10":<index>,"votedTop10Word":<word>}"); we don't change it since it seems to be only used for validation, not information
             'Upgrade-Insecure-Requests': '1',
             'TE': 'Trailers'
             }
         self.data = None
+        # the voting mechanism doesn't care whether we've solved the captcha or not, sending a fake token is enough
+        self.token = "".join(random.choice(string.ascii_uppercase + string.digits) for _ in range(1422))
 
     def prepare(self):
-        captcha = requests.get(
-            "https://www.google.com/recaptcha/api2/anchor?ar=1&k=6Lf5zMAZAAAAAKgTZritepo-zKuRStlrPa06Ts4l&co=aHR0cHM6Ly93b2VydGVyYnVjaC5sYW5nZW5zY2hlaWR0LmRlOjQ0Mw..&hl=de&v=QVh-Tz10ahidjrORgXOS1oB0&size=normal&cb=kdrj353l3ddq",
-            proxies=self.proxyDict)
-        soup = BeautifulSoup(captcha.text, "html.parser")
-        token = soup.find("input", {"id": "recaptcha-token"})["value"]
         self.data = {
             "age": 1,
             "w": str(INDEX),
             "consent": "1",
-            "g-recaptcha-response": token
-            # the voting mechanism doesn't care whether we've solved the captcha or not, sending the captcha's token is enough
+            "g-recaptcha-response": self.token
             }
 
     def vote(self):
