@@ -7,7 +7,7 @@ import requests
 WORD = "Schabernack"
 INDEX = 0  # Index of the word
 ATTEMPTS = 10000
-WORKERS = 100
+WORKERS = 750
 SOCKS4_LIST_URL = "https://api.proxyscrape.com/?request=getproxies&proxytype=socks4"
 
 
@@ -50,7 +50,7 @@ class Voter:
 
     def vote(self):
         r = requests.post("https://woerterbuch.langenscheidt.de/js20/top10/vote", data=self.data, headers=self.headers,
-                          proxies=self.proxyDict)
+                          proxies=self.proxyDict, timeout=10)
         return "Ehre für's Voten!" in r.text
 
 
