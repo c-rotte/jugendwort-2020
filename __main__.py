@@ -6,8 +6,8 @@ from bs4 import BeautifulSoup
 
 WORD = "Schabernack"
 INDEX = 0  # Index of the word
-ATTEMPTS = 10000
-WORKERS = 200
+ATTEMPTS = 100000
+WORKERS = 700
 SOCKS4_LIST_URL = "https://api.proxyscrape.com/?request=getproxies&proxytype=socks4"
 
 
@@ -32,7 +32,7 @@ class Voter:
             'Origin': 'null',
             'Connection': 'keep-alive',
             'Cookie': 'js20=eyJ0b3AxMEFnZUlkeCI6MiwidG9wMTBXb3JkSWR4IjowLCJ0b3AxMENvbnNlbnQiOjEsInZvdGVkVG9wMTAiOjAsInZvdGVkVG9wMTBXb3JkIjoiU2NoYWJlcm5hY2sifQ==; js20.sig=W0UAPnkamc9lOvQRdLP4hJNhdRs',
-            # the cookie seems to be static
+            # the cookie (signed) is of the format base64("{"top10AgeIdx":<age>,"top10WordIdx":<index>,"top10Consent":1,"votedTop10":<index>,"votedTop10Word":<word>}"); we don't change it since it seems to be only used for validation, not information 
             'Upgrade-Insecure-Requests': '1',
             'TE': 'Trailers'
             }
