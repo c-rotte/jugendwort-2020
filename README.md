@@ -7,7 +7,7 @@ Standardmäßige Proxyquelle: https://api.proxyscrape.com
 
 ### Die Seite nutzt reCAPTCHA; wie kann dann eine automatisierte Abstimmung ohne Captcha-Service erfolgen?
 
-Die POST-Anfrage mit dem gewählten Wort und dem Alter des Wählers erwartet Informationen über das Captcha, allerdings ist dieses fehlerhaft implementiert; verlangt wird nur der Token des Captchas, welcher einfach auszulesen ist:
+Die POST-Anfrage mit dem gewählten Wort und dem Alter des Wählers erwartet Informationen über das Captcha, allerdings ist dieses (scheinbar) fehlerhaft implementiert; verlangt wird nur der Token des Captchas, welcher einfach auszulesen ist:
 
 ```python
 # Captcha der Abstimmungsseite
