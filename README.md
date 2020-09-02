@@ -2,7 +2,7 @@
 
 https://www.langenscheidt.com/jugendwort-des-jahres
 
-Standardmäßige Proxyquelle: https://api.proxyscrape.com
+Standardmäßige Proxyquelle: https://proxyscrape.com
 
 
 ### Die Seite nutzt reCAPTCHA; wie kann dann eine automatisierte Abstimmung ohne Captcha-Service erfolgen?
